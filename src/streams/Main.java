@@ -32,44 +32,61 @@ public class Main {
         Stream<Integer> stream1 = Arrays.stream(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8});
         Stream<Integer> stream2 = Arrays.stream(new Integer[]{9,10,11,12,13});
         Stream<Integer> newStream = zip(stream1, stream2);
-        System.out.println(newStream);
-        //newStream.forEach(System.out::println);
-        long count = newStream.count();
-        System.out.println(count);
+        newStream.forEach(System.out::println);
     }
 
     // task 5
     public static <T> Stream<T> zip(Stream<T> first, Stream<T> second) {
-//        final Iterator<T> iteratorFirst = first.iterator();
-//        final Iterator<T> iteratorSecond = second.iterator();
-//
-//         Iterator<T> iteratorNew = new Iterator<T>() {
+        final Iterator<T> iteratorFirst = first.iterator();
+        final Iterator<T> iteratorSecond = second.iterator();
+        ArrayList<T> arrayList = new ArrayList<T>();
+
+        // вариант 0
+        while (iteratorFirst.hasNext()&&iteratorSecond.hasNext()) {
+            arrayList.add(iteratorFirst.next());
+            arrayList.add(iteratorSecond.next());
+        }
+        return arrayList.stream();
+
+        // вариант 1
+//        Iterator<Stream<T>> iteratorNew = new Iterator<Stream<T>>() {
 //            @Override
 //            public boolean hasNext() {
 //                return iteratorFirst.hasNext() && iteratorSecond.hasNext();
 //            }
 //            @Override
-//            public T next() {
-//                return iteratorFirst.next();
+//            public Stream <T> next() {
+//                return List.of(iteratorFirst.next(),iteratorSecond.next()).stream();
 //            }
 //        };
+//        // как-то сделать из итератора стримов <Stream<T>> новый Stream<T> из элементом <T>
+//        Spliterator<T> spliterator = Spliterators.spliterator(iteratorNew);
+//        return StreamSupport.stream(iteratorNew);
 
+        // вариант 2 - через стримбилдер (?)
+        // todo
+
+        // вариант 3 - сразу стрим
 //        Stream<T> tStream = first ;
 //        return tStream
 //                .limit(Math.min(first.count(), second.count()))
 //                .flatMap((p) -> List.of(iteratorFirst.next(), iteratorSecond.next()).stream())
 //                ;
 
-        //Stream<Iterator<T>> iteratorNew1 = Stream.of(iteratorNew);
-        long min = Math.min(first.count(), second.count());
-        Stream<T> streamStream = (Stream<T>) Stream.of(first.limit(min).toArray(), second.limit(min).toArray())
-                .flatMap(e -> (Stream<T>) Arrays.stream(e));
-        Stream<T> stream = Stream
-                .concat(first, second)
-                //.limit(Math.min(first.count(), second.count()))
-                ;
-        return streamStream;
+        // вариант 4
+//        long min = Math.min(first.count(), second.count());
+//        Stream<T> streamStream = (Stream<T>) Stream.of(first.limit(min).toArray(), second.limit(min).toArray())
+//                .flatMap(e -> (Stream<T>) Arrays.stream(e));
+//        return streamStream;
+
+        // вариант 5
+//        Stream<T> stream = Stream
+//                .concat(first, second)
+//                .limit(Math.min(first.count(), second.count()))
+//                ;
+//        return stream;
     }
+
 
     // add to task 4
     public static long pow(int value, int powValue) {
