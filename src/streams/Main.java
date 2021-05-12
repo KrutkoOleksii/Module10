@@ -47,46 +47,7 @@ public class Main {
             arrayList.add(iteratorSecond.next());
         }
         return arrayList.stream();
-
-        // вариант 1
-//        Iterator<Stream<T>> iteratorNew = new Iterator<Stream<T>>() {
-//            @Override
-//            public boolean hasNext() {
-//                return iteratorFirst.hasNext() && iteratorSecond.hasNext();
-//            }
-//            @Override
-//            public Stream <T> next() {
-//                return List.of(iteratorFirst.next(),iteratorSecond.next()).stream();
-//            }
-//        };
-//        // как-то сделать из итератора стримов <Stream<T>> новый Stream<T> из элементом <T>
-//        Spliterator<T> spliterator = Spliterators.spliterator(iteratorNew);
-//        return StreamSupport.stream(iteratorNew);
-
-        // вариант 2 - через стримбилдер (?)
-        // todo
-
-        // вариант 3 - сразу стрим
-//        Stream<T> tStream = first ;
-//        return tStream
-//                .limit(Math.min(first.count(), second.count()))
-//                .flatMap((p) -> List.of(iteratorFirst.next(), iteratorSecond.next()).stream())
-//                ;
-
-        // вариант 4
-//        long min = Math.min(first.count(), second.count());
-//        Stream<T> streamStream = (Stream<T>) Stream.of(first.limit(min).toArray(), second.limit(min).toArray())
-//                .flatMap(e -> (Stream<T>) Arrays.stream(e));
-//        return streamStream;
-
-        // вариант 5
-//        Stream<T> stream = Stream
-//                .concat(first, second)
-//                .limit(Math.min(first.count(), second.count()))
-//                ;
-//        return stream;
     }
-
 
     // add to task 4
     public static long pow(int value, int powValue) {
